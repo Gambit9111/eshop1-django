@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block modal %}
+<a href="{% url 'store:all_categories' %}" class="d-flex">
+    <img src="{% static 'images/back-button.png' %}" alt="jusciogrybai" class="mr-3" width="16" height="16">
+</a>
+
+<div class="container px-5 py-3 text-center color grow">
+    <div class="row row-cols-1 row-cols-md-4 g-3 pb-0 pe-lg-0 pt-lg-5 rounded-3 border shadow-lg">
+        {% for product in products %}
+        <div class="col">
+            <div class="card border-0 p-1">
+                <a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt="jusciogrybai" class="card-img-top shadow img-fluid" style="border-radius: 30%;"></a>
+                <div class="card-body">
+                    <h6 class="card-title">{{product.name}}</h6>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock modal %}
