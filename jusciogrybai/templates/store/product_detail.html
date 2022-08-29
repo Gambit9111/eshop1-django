@@ -21,7 +21,11 @@
                                                 src="{% static 'images/back-button.png' %}" alt="jusciogrybai"
                                                 class="mr-3" width="16" height="16"></a></span></div>
                             </div>
+                            {% if order_item.quantity %}
+                            <div x-data="{ count: {{product.price}}*{{order_item.quantity}}}">
+                            {% else %}
                             <div x-data="{ count: {{product.price}}*1}">
+                            {% endif %}
                             <div class="mt-4 mb-3"> <span class="text-uppercase brand">{{product.name}}</span>
                                 <div class="price d-flex flex-row align-items-center"> <span
                                         class="act-price" x-text="count">{{product.price}}</span>€</div>
@@ -32,6 +36,7 @@
                                     action="{% url 'store:product_detail' product.category.slug product.slug %}">
                                         <fieldset class="form-group">
                                             <legend class="mt-1 text-muted">Kiekis</legend>
+                                            {% if order_item.quantity == None or order_item.quantity == 1 %}
                                             <input x-on:click="count={{product.price}}*1" class="form-check-input" type="radio"
                                                 name="quantity" value="1" checked> <span>1</span>
                                             <input x-on:click="count={{product.price}}*2" class="form-check-input" type="radio"
@@ -42,13 +47,58 @@
                                                 name="quantity" value="4"> <span>4</span>
                                             <input x-on:click="count={{product.price}}*5" class="form-check-input" type="radio"
                                                 name="quantity" value="5"> <span>5</span>
+                                            {% elif order_item.quantity == 2 %}
+                                            <input x-on:click="count={{product.price}}*1" class="form-check-input" type="radio"
+                                                name="quantity" value="1"> <span>1</span>
+                                            <input x-on:click="count={{product.price}}*2" class="form-check-input" type="radio"
+                                                name="quantity" value="2"checked> <span>2</span>
+                                            <input x-on:click="count={{product.price}}*3" class="form-check-input" type="radio"
+                                                name="quantity" value="3"> <span>3</span>
+                                            <input x-on:click="count={{product.price}}*4" class="form-check-input" type="radio"
+                                                name="quantity" value="4"> <span>4</span>
+                                            <input x-on:click="count={{product.price}}*5" class="form-check-input" type="radio"
+                                                name="quantity" value="5"> <span>5</span>
+                                            {% elif order_item.quantity == 3 %}
+                                            <input x-on:click="count={{product.price}}*1" class="form-check-input" type="radio"
+                                                name="quantity" value="1"> <span>1</span>
+                                            <input x-on:click="count={{product.price}}*2" class="form-check-input" type="radio"
+                                                name="quantity" value="2"> <span>2</span>
+                                            <input x-on:click="count={{product.price}}*3" class="form-check-input" type="radio"
+                                                name="quantity" value="3"checked> <span>3</span>
+                                            <input x-on:click="count={{product.price}}*4" class="form-check-input" type="radio"
+                                                name="quantity" value="4"> <span>4</span>
+                                            <input x-on:click="count={{product.price}}*5" class="form-check-input" type="radio"
+                                                name="quantity" value="5"> <span>5</span>
+                                            {% elif order_item.quantity == 4 %}
+                                            <input x-on:click="count={{product.price}}*1" class="form-check-input" type="radio"
+                                                name="quantity" value="1"> <span>1</span>
+                                            <input x-on:click="count={{product.price}}*2" class="form-check-input" type="radio"
+                                                name="quantity" value="2"> <span>2</span>
+                                            <input x-on:click="count={{product.price}}*3" class="form-check-input" type="radio"
+                                                name="quantity" value="3"> <span>3</span>
+                                            <input x-on:click="count={{product.price}}*4" class="form-check-input" type="radio"
+                                                name="quantity" value="4"checked> <span>4</span>
+                                            <input x-on:click="count={{product.price}}*5" class="form-check-input" type="radio"
+                                                name="quantity" value="5"> <span>5</span>
+                                            {% elif order_item.quantity == 5 %}
+                                            <input x-on:click="count={{product.price}}*1" class="form-check-input" type="radio"
+                                                name="quantity" value="1"> <span>1</span>
+                                            <input x-on:click="count={{product.price}}*2" class="form-check-input" type="radio"
+                                                name="quantity" value="2"> <span>2</span>
+                                            <input x-on:click="count={{product.price}}*3" class="form-check-input" type="radio"
+                                                name="quantity" value="3"> <span>3</span>
+                                            <input x-on:click="count={{product.price}}*4" class="form-check-input" type="radio"
+                                                name="quantity" value="4"> <span>4</span>
+                                            <input x-on:click="count={{product.price}}*5" class="form-check-input" type="radio"
+                                                name="quantity" value="5"checked> <span>5</span>
+                                            {% endif %}
                                         </fieldset>
                             </div>
                             </div>
                         </div>
                         <div class="cart mt-4 align-items-center">
                             {% csrf_token %}
-                            <input class="btn btn-primary px-5 me-md-2 fw-bold" type="submit" value="Į krepšelį">
+                            <input class="btn btn-primary px-5 me-md-2 fw-bold" type="submit" value="Išsaugoti">
                             </form>
                         </div>
                     </div>

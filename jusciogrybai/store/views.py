@@ -23,9 +23,14 @@ def product_detail(request, slug_cat, slug_prod):
         orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
         orderItem.quantity=request.POST['quantity']
         orderItem.save()
-        print(orderItem)
-        context = { 'product': product, 'orderItem': orderItem }
+        order_item = OrderItem.objects.get(product=product)
+        context = { 'product': product, 'order_item': order_item }
     else:
-        context = { 'product': product }
+        try:
+            order_item = OrderItem.objects.get(product=product)
+            context = { 'product': product, 'order_item': order_item }
+            print(order_item.quantity)
+        except OrderItem.DoesNotExist:
+            context = { 'product': product }
 
     return render(request, "store/product_detail.html", context)
