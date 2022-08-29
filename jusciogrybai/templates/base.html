@@ -25,7 +25,7 @@
       <!-- Bootstrap JS -->
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
-
+      <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
       <!-- place project specific Javascript in this file -->
       <script defer src="{% static 'js/project.js' %}"></script>
 
@@ -44,14 +44,14 @@
             <img src="{% static 'images/logos/mushrooms.png' %}" alt="jusciogrybai" class="mr-3" width="48" height="48">
           </a>
     
+        </a>
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            {% if request.user.is_authenticated %}
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Profilis</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Atsijungti</a>
+            {% if my_order is None %}
             {% else %}
-            <a id="sign-up-link" class="me-3 py-2 text-dark text-decoration-none" href="#">Registracija</a>
-            <a id="log-in-link" class="py-2 text-dark text-decoration-none" href="#">Prisijungti</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="#">{{my_order.get_cart_total}}€</a>
             {% endif %}
+            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Kontaktai</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Informacija</a>
           </nav>
         </div>
       </header>

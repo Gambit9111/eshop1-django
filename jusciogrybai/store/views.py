@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Category, Product
+from .models import Category, Product, Order, OrderItem
 
 # categories view
 def all_categories(request):
@@ -8,10 +8,24 @@ def all_categories(request):
 
 def products_by_category(request, slug):
     products = Product.get_all_products_by_category_slug(slug)
-    print(products)
     return render(request, "store/products_by_category.html", {"products": products})
 
 def product_detail(request, slug_cat, slug_prod):
-    print(slug_cat, slug_prod)
     product = Product.objects.get(slug=slug_prod)
-    return render(request, "store/product_detail.html", {"product": product})
+
+    if request.method == 'POST':
+        product = Product.objects.get(slug=slug_prod)
+        device = request.COOKIES['device']
+        print(request.POST)
+        print(device)
+        order, created = Order.objects.get_or_create(device=device, complete=False)
+        print(order)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        orderItem.quantity=request.POST['quantity']
+        orderItem.save()
+        print(orderItem)
+        context = { 'product': product, 'orderItem': orderItem }
+    else:
+        context = { 'product': product }
+
+    return render(request, "store/product_detail.html", context)
