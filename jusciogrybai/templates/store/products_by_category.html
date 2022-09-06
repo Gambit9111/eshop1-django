@@ -2,10 +2,6 @@
 {% load static %}
 
 {% block modal %}
-<a href="{% url 'store:all_categories' %}" class="d-flex">
-    <img src="{% static 'images/back-button.png' %}" alt="jusciogrybai" class="mr-3" width="16" height="16">
-</a>
-
 <div class="container px-5 py-3 text-center color grow">
     <div class="row row-cols-1 row-cols-md-4 g-3 pb-0 pe-lg-0 pt-lg-5 rounded-3 border shadow-lg">
         {% for product in products %}
@@ -20,4 +16,11 @@
         {% endfor %}
     </div>
 </div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb px-5 pt-3">
+      <li class="breadcrumb-item"><a href="{% url 'store:all_categories' %}">Kategorijos</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Grybai</li>
+    </ol>
+</nav>
 {% endblock modal %}
