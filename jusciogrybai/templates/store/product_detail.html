@@ -32,8 +32,7 @@
                             </div>
                             <p class="about">{{product.description}}</p>
                             <div class="sizes mt-5">
-                                <form method="POST"
-                                    action="{% url 'store:product_detail' product.category.slug product.slug %}">
+                                <form method="POST" action="{% url 'store:product_detail' product.category.slug product.slug %}">
                                         <fieldset class="form-group">
                                             <legend class="mt-1 text-muted">Kiekis</legend>
                                             {% if order_item.quantity == None or order_item.quantity == 1 %}

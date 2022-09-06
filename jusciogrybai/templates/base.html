@@ -47,7 +47,7 @@
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
             {% if my_order is None %}
             {% else %}
-            <a href="{% url 'home' %}" class="d-flex align-items-center text-dark text-decoration-none">
+            <a href="{% url 'store:cart_view' %}" class="d-flex align-items-center text-dark text-decoration-none">
               <img src="{% static 'images/logos/shopping-cart.png' %}" alt="jusciogrybai" class="mr-3" width="48" height="48">
               <span class="fs-3 p-2">{{my_order.get_cart_total}}€ {{my_order.get_cart_items}}X</span>
               <img src="{% static 'images/logos/mushrooms.png' %}" alt="jusciogrybai" class="mr-3" width="32" height="32">

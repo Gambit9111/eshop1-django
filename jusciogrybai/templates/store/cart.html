@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block modal %}
+<!-- form -->
+<div class="container px-5 py-3 rounded-3 border shadow-lg">
+{% for item in order_items %}
+<form method="POST" action="{% url 'store:cart_view' %}">
+{% csrf_token %}
+<div class="row mb-4 py-3">
+  <!-- image -->
+  <div class="col-md-3 col-lg-2">
+    <img class="img-fluid mx-auto d-block" width="150px" alt="Responsive image" src="{{ item.product.image.url }}">
+  </div>
+  <!-- details -->
+  <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+
+    <a href="{{ item.product.get_absolute_url }}" class="text-decoration-underline text-reset">
+      <h1 class="h5 pt-2">{{ item.product.name }}</h1>
+    </a>
+
+    <div class="p-4 border-bottom">
+      <div class="col">
+        <div class="row p-1">
+          <input type="hidden" name="product_id" value="{{ item.product.id }}">
+          <button type="submit" class="btn-close"></button>
+          <div class="col-6"><span class="h4 fw-bold px-5">{{ item.get_total }}€ {{ item.quantity }}X</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</form>
+{% endfor %}
+
+</div>
+{% endblock %}
