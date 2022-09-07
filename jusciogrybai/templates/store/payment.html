@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+
+{% block modal %}
+<div class="container px-5">
+  <div class="container rounded-3 px-5 border shadow-lg">
+      <main>
+        <div class="py-5 text-center">
+            <h3>Sąskaita</h3>
+        </div>
+        <div class="row g-5 pt-1">
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <ul class="list-group mb-3">
+              {% for item in order_items %}
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">{{item.product.name}}  {{item.quantity}}X</h6>
+                  <small class="text-muted">{{item.product.category}}</small>
+                </div>
+                <span class="text-muted">€{{item.get_total}}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="col-md-7 col-lg-8">
+            <h5 class="mb-3 pb-1">Pervesti pardavėjui<strong class="px-3">€{{order.get_cart_total|sub:5}}</strong></h5>
+            <form method="POST" action="{% url 'store:payment' order.uuid %}">
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-sm-6">
+                    Mindaugas Taranovskis
+                </div>
+    
+                <div class="col-sm-6">
+                    LT137300010000561355
+                </div>
+              </div>
+    
+              <hr class="my-4 pb-5">
+
+              <h5 class="mb-3 pb-1">Nurodykite užsąkymo numerį mokėjimo paskirtyje </h5>
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        Užsakymo numeris
+                    </div>
+        
+                    <div class="col-sm-6">
+                        {{payment_id}}
+                    </div>
+                </div>
+    
+              <hr class="my-4">
+    
+              <button class="w-100 btn btn-primary fw-bold" type="submit">Atlikau mokėjimą !</button>
+            </form>
+          </div>
+        </div>
+      </main>
+  </div>
+</div>
+{% endblock %}

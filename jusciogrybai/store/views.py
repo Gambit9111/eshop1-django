@@ -1,6 +1,6 @@
 from re import M
 from django.shortcuts import render, redirect
-from .models import Category, Product, Order, OrderItem
+from .models import Category, Product, Order, OrderItem, ShippingDetails
 
 # categories view
 def all_categories(request):
@@ -65,3 +65,27 @@ def cart_view(request):
         return redirect('store:all_categories')
 
     return render(request, "store/cart.html", {"order_items": order_items})
+
+def checkout(request, uuid):
+    order = Order.objects.get(uuid=uuid)
+    order_items = OrderItem.objects.filter(order=order)
+
+    if request.method == "POST":
+        data = request.POST
+        print(data)
+        shipping_details = ShippingDetails.objects.create(order=order, name=(data['firstName'] + " " + data['lastName']), email=data['email'], phone_number=data['phoneNumber'], address=data['address1'], address2=data['address2'], city=data['city'])
+        print(shipping_details)
+        return redirect('store:payment', uuid=uuid)
+    return render(request, "store/checkout.html", {'order': order, 'order_items': order_items})
+
+def payment(request, uuid):
+    order = Order.objects.get(uuid=uuid)
+    order_items = OrderItem.objects.filter(order=order)
+    shipping_details = ShippingDetails.objects.get(order=order)
+    payment_id = str(order.uuid)[0:8]
+
+    if request.method == "POST":
+        order.complete = True
+        order.save()
+        return redirect('store:all_categories')
+    return render(request, "store/payment.html", {'order': order, 'order_items': order_items, 'shipping_details': shipping_details, 'payment_id': payment_id})

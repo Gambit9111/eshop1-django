@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+
+{% block modal %}
+<div class="container px-5">
+  <div class="container rounded-3 px-5 border shadow-lg">
+      <main>
+        <div class="py-5 text-center">
+          <h3>Jūsų užsakymas</h3>
+        </div>
+    
+        <div class="row g-5">
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-primary">Krepšelis</span>
+              <span class="badge bg-primary rounded-pill">{{order.get_cart_items}}</span>
+            </h4>
+            <ul class="list-group mb-3">
+
+              {% for item in order_items %}
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">{{item.product.name}}  {{item.quantity}}X</h6>
+                  <small class="text-muted">{{item.product.category}}</small>
+                </div>
+                <span class="text-muted">€{{item.get_total}}</span>
+              </li>
+              {% endfor %}
+
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">Nuolaida</h6>
+                  <small>BNK343FF4</small>
+                </div>
+                <span class="text-success">−€5</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Viso (EUR)</span>
+                <strong>€{{order.get_cart_total|sub:5}}</strong>
+              </li>
+            </ul>
+    
+            <form class="card p-2">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Promo kodas">
+                <button type="submit" class="btn btn-secondary">Panaudoti</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Užpildykite pirkėjo duomenis</h4>
+            <form method="POST" action="{% url 'store:checkout' my_order.uuid %}">
+              {% csrf_token %}
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">Vardas</label>
+                  <input name="firstName" type="text" class="form-control" id="firstName" placeholder="Tomas">
+                </div>
+    
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Pavarde</label>
+                  <input name="lastName" type="text" class="form-control" id="lastName" placeholder="Mol">
+                </div>
+    
+  
+                <div class="col-12">
+                  <label for="email" class="form-label">Elektroninis paštas</label>
+                  <input name="email" type="email" class="form-control" id="email" placeholder="vardenas@pvz.com">
+                </div>
+    
+                <div class="col-12">
+                  <label for="address" class="form-label">Gatvė ir namo numeris</label>
+                  <input name="address1" type="text" class="form-control" id="address" placeholder="Molo gatvė 3" r>
+                </div>
+    
+                <div class="col-12">
+                  <label for="address2" class="form-label">Buto numeris</label>
+                  <input name="address2" type="text" class="form-control" id="address2" placeholder="Nr. 74">
+                </div>
+    
+                <div class="col-md-5">
+                  <label for="country" class="form-label">Miestas</label>
+                  <input name="city" type="text" class="form-control" id="address2" placeholder="Klaipėda">
+                </div>
+
+                <div class="col-md-3">
+                  <label for="city" class="form-label">Numeris</label>
+                  <input name="phoneNumber" type="text" class="form-control" id="city" placeholder="860123123">
+                </div>
+              </div>
+    
+              <hr class="my-4">
+
+              <h4 class="mb-3">Mokėjimas</h4>
+    
+              <div class="my-3">
+                <div class="form-check">
+                  <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                  <label class="form-check-label" for="credit">Bankinis pavedimas</label>
+                </div>
+                <div class="form-check disabled">
+                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" disabled="">
+                  <label class="form-check-label" for="debit">Elektroninė bankininkystė</label>
+                </div>
+                <div class="form-check disabled">
+                  <input id="paypal" name="paymentMethod" type="radio" class="form-check-input disabled" disabled="">
+                  <label class="form-check-label" for="paypal">PayPal</label>
+                </div>
+                <div class="form-check disabled">
+                  <input id="paypal" name="paymentMethod" type="radio" class="form-check-input disabled" disabled="">
+                  <label class="form-check-label" for="paypal">Bitcoin</label>
+                </div>
+              </div>
+    
+              <hr class="my-4">
+    
+              <button class="w-100 btn btn-primary fw-bold" type="submit">Patvirtinti</button>
+            </form>
+          </div>
+        </div>
+      </main>
+  </div>
+</div>
+{% endblock %}

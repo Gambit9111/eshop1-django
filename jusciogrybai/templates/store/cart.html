@@ -3,36 +3,54 @@
 
 {% block modal %}
 <!-- form -->
-<div class="container px-5 py-3 rounded-3 border shadow-lg">
-{% for item in order_items %}
-<form method="POST" action="{% url 'store:cart_view' %}">
-{% csrf_token %}
-<div class="row mb-4 py-3">
-  <!-- image -->
-  <div class="col-md-3 col-lg-2">
-    <img class="img-fluid mx-auto d-block" width="150px" alt="Responsive image" src="{{ item.product.image.url }}">
-  </div>
-  <!-- details -->
-  <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+<div class="container px-5">
+  <div class="container py-4 rounded-3 border shadow-lg">
+    {% for item in order_items %}
+    <form method="POST" action="{% url 'store:cart_view' %}">
+    {% csrf_token %}
+      <div class="row mb-4 pt-3">
+        <!-- image -->
+        <div class="col-md-3 col-lg-2">
+          <img class="img-fluid mx-auto d-block" width="150px" alt="Responsive image" src="{{ item.product.image.url }}">
+        </div>
+        <!-- details -->
+        <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
 
-    <a href="{{ item.product.get_absolute_url }}" class="text-decoration-underline text-reset">
-      <h1 class="h5 pt-2">{{ item.product.name }}</h1>
-    </a>
+            <a href="{{ item.product.get_absolute_url }}" class="text-decoration-underline text-reset">
+              <h1 class="h5 pt-2">{{ item.product.name }}</h1>
+            </a>
 
-    <div class="p-4 border-bottom">
-      <div class="col">
-        <div class="row p-1">
-          <input type="hidden" name="product_id" value="{{ item.product.id }}">
-          <button type="submit" class="btn-close"></button>
-          <div class="col-6"><span class="h4 fw-bold px-5">{{ item.get_total }}€ {{ item.quantity }}X</span></div>
+            <div class="p-4 border-bottom">
+              <div class="col">
+                <div class="row p-1">
+                  <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                  <button type="submit" class="btn-close"></button>
+                  <div class="col-6"><span class="h4 fw-bold px-5">{{ item.get_total }}€ {{ item.quantity }}X</span></div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+      </div>
+    </form>
+    {% endfor %}
+
+      <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+          <a href="{% url 'store:checkout' my_order.uuid %}" class="d-flex align-items-center text-dark text-decoration-none">
+            <img src="{% static 'images/logos/money2.svg' %}" alt="jusciogrybai" class="mr-3" width="32" height="32">
+            <span class="fs-4 px-2">Tęsti</span>
+          </a>
         </div>
       </div>
-    </div>
   </div>
 
-</div>
-</form>
-{% endfor %}
-
-</div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb pt-4">
+      <li class="breadcrumb-item"><a href="{% url 'store:all_categories' %}">Kategorijos</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Krepšelis</li>
+    </ol>
+  </nav>
+<div>
 {% endblock %}
