@@ -95,10 +95,9 @@ class ShippingDetails(models.Model):
     address = models.CharField(max_length=200, null=False)
     address2 = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200, null=False)
-    zipcode = models.CharField(max_length=200, null=True)
     phone_number = models.IntegerField(null=False, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)
-    paid = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.order.uuid) + " - " + str(self.name) + " - " + str(self.city) + " - " + str(self.paid) + " - " + str(self.phone_number)
+        return str(self.order.uuid) + " - " + str(self.name) + " - " + str(self.city) + " - " + str(self.completed) + " - " + str(self.phone_number)

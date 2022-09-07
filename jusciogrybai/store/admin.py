@@ -1,10 +1,12 @@
 from django.contrib import admin
+import django.apps
 
 from .models import Product, Category, Order, OrderItem, ShippingDetails
 
-admin.site.register(Product)
-admin.site.register(Category)
-admin.site.register(Order)
-admin.site.register(OrderItem)
-admin.site.register(ShippingDetails)
+models = django.apps.apps.get_models()
 
+for model in models:
+    try:
+        admin.site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass

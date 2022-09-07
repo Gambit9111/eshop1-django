@@ -1,6 +1,6 @@
-from re import M
 from django.shortcuts import render, redirect
 from .models import Category, Product, Order, OrderItem, ShippingDetails
+from django.contrib.auth.decorators import login_required
 
 # categories view
 def all_categories(request):
@@ -87,5 +87,12 @@ def payment(request, uuid):
     if request.method == "POST":
         order.complete = True
         order.save()
+        order_items.delete()
         return redirect('store:all_categories')
     return render(request, "store/payment.html", {'order': order, 'order_items': order_items, 'shipping_details': shipping_details, 'payment_id': payment_id})
+
+@login_required(login_url='/admin/login/')
+def orders_admin_area(request):
+    if request.user.is_superuser:
+        orders = Order.objects.all()
+        return render(request, "store/orders_admin_area.html", {"orders": orders})

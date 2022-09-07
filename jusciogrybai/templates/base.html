@@ -53,8 +53,11 @@
               <img src="{% static 'images/logos/mushrooms.png' %}" alt="jusciogrybai" class="mr-3" width="32" height="32">
             </a>
             {% endif %}
+            {% if user.is_superuser %}
+            {% else %}
             <a class="me-3 py-2 text-dark text-decoration-none ps-5" href="#">Kontaktai</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Informacija</a>
+            {% endif %}
           </nav>
         </div>
       </header>

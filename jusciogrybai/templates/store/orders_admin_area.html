@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+
+{% block modal %}
+<div class="container px-5">
+  <div class="container rounded-3 px-5 border shadow-lg">
+    {% for order in orders %}
+        {{order}}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
